@@ -1,11 +1,9 @@
 export const ROLES = [
-  { value: 'process_engineer', label: '工艺工程师', username: 'process', password: '123456' },
-  { value: 'operator', label: '操作工', username: 'operator', password: '123456' },
-  { value: 'team_leader', label: '班组长', username: 'leader', password: '123456' },
-  { value: 'production_manager', label: '生产经理', username: 'manager', password: '123456' },
-  { value: 'quality_engineer', label: '质量工程师', username: 'quality', password: '123456' },
-  { value: 'repairman', label: '维修工', username: 'repair', password: '123456' },
-  { value: 'admin', label: '管理员', username: 'admin', password: '123456' },
+  { value: 'production_manager', label: '生产主管' },
+  { value: 'team_leader', label: '班组长' },
+  { value: 'operator', label: '操作工' },
+  { value: 'quality_engineer', label: '质量工程师' },
+  { value: 'admin', label: '工厂管理层' },
 ]
 
 export const PERMISSION_CODES = {
@@ -21,7 +19,6 @@ export const PERMISSION_CODES = {
   DEVICE: 'device',
   SYSTEM: 'system',
 }
-
 
 export const BACKEND_FUNCTION_PERMISSION_MAP = {
   dashboard: [PERMISSION_CODES.DASHBOARD],
@@ -106,77 +103,6 @@ export function isRtmRole(role) {
   return ROLES.some((item) => item.value === role)
 }
 
-export const ROLE_PERMISSIONS = {
-  process_engineer: [
-    PERMISSION_CODES.DASHBOARD,
-    PERMISSION_CODES.KANBAN,
-    PERMISSION_CODES.DEVICE,
-    PERMISSION_CODES.SYSTEM,
-  ],
-  production_manager: [
-    PERMISSION_CODES.DASHBOARD,
-    PERMISSION_CODES.KANBAN,
-    PERMISSION_CODES.WORK_ORDER,
-    PERMISSION_CODES.BATCH,
-    PERMISSION_CODES.TRACKING,
-    PERMISSION_CODES.SYSTEM,
-  ],
-  team_leader: [
-    PERMISSION_CODES.DASHBOARD,
-    PERMISSION_CODES.KANBAN,
-    PERMISSION_CODES.LOADING,
-    PERMISSION_CODES.CHECK_IN,
-    PERMISSION_CODES.CHECK_OUT,
-    PERMISSION_CODES.TRACKING,
-    PERMISSION_CODES.SYSTEM,
-  ],
-  operator: [
-    PERMISSION_CODES.DASHBOARD,
-    PERMISSION_CODES.KANBAN,
-    PERMISSION_CODES.LOADING,
-    PERMISSION_CODES.CHECK_IN,
-    PERMISSION_CODES.CHECK_OUT,
-    PERMISSION_CODES.TRACKING,
-    PERMISSION_CODES.SYSTEM,
-  ],
-  quality_engineer: [
-    PERMISSION_CODES.DASHBOARD,
-    PERMISSION_CODES.KANBAN,
-    PERMISSION_CODES.BATCH,
-    PERMISSION_CODES.CHECK_OUT,
-    PERMISSION_CODES.REPAIR,
-    PERMISSION_CODES.TRACKING,
-    PERMISSION_CODES.SYSTEM,
-  ],
-  repairman: [
-    PERMISSION_CODES.DASHBOARD,
-    PERMISSION_CODES.KANBAN,
-    PERMISSION_CODES.REPAIR,
-    PERMISSION_CODES.TRACKING,
-    PERMISSION_CODES.SYSTEM,
-  ],
-  admin: Object.values(PERMISSION_CODES),
-}
-
-export const ROLE_HOME_PATH = {
-  process_engineer: '/device',
-  production_manager: '/production/work-order',
-  team_leader: '/execution/loading',
-  operator: '/execution/loading',
-  quality_engineer: '/execution/check-out',
-  repairman: '/execution/repair',
-  admin: '/dashboard',
-}
-
-export function roleHasPermission(role, permission) {
-  if (!permission || role === 'admin') return true
-  return ROLE_PERMISSIONS[role]?.includes(permission) || false
-}
-
-export function firstAccessiblePath(role) {
-  return ROLE_HOME_PATH[role] || '/dashboard'
-}
-
 export const WORK_ORDER_STATUS = {
   1: { label: '草稿', type: 'info', color: '#909399' },
   2: { label: '已发布', type: 'warning', color: '#d97706' },
@@ -245,10 +171,6 @@ export const DEVICE_TYPES = [
   'AOI检测仪',
 ]
 
-export function statusMeta(map, value) {
-  return map[value] || { label: value || '未知', type: 'info', color: '#909399' }
-}
-
 export const BATCH_STATUS_CODE = {
   pending: 1,
   running: 2,
@@ -267,6 +189,6 @@ export const PROCESS_STATUS_CODE = {
   skipped: 6,
 }
 
-export function findLoginRole(username, password) {
-  return ROLES.find((item) => item.username === username && item.password === password) || null
+export function statusMeta(map, value) {
+  return map[value] || { label: value || '未知', type: 'info', color: '#909399' }
 }
