@@ -1,11 +1,11 @@
 export const ROLES = [
-  { value: 'process_engineer', label: '宸ヨ壓宸ョ▼甯?, username: 'process', password: '123456' },
-  { value: 'operator', label: '鎿嶄綔宸?, username: 'operator', password: '123456' },
-  { value: 'team_leader', label: '鐝粍闀?, username: 'leader', password: '123456' },
-  { value: 'production_manager', label: '鐢熶骇涓荤', username: 'manager', password: '123456' },
-  { value: 'quality_engineer', label: '璐ㄩ噺宸ョ▼甯?, username: 'quality', password: '123456' },
-  { value: 'repairman', label: '缁翠慨鍛?, username: 'repair', password: '123456' },
-  { value: 'admin', label: '宸ュ巶绠＄悊灞?, username: 'admin', password: '123456' },
+  { value: 'process_engineer', label: '工艺工程师', username: 'process', password: '123456' },
+  { value: 'operator', label: '操作工', username: 'operator', password: '123456' },
+  { value: 'team_leader', label: '班组长', username: 'leader', password: '123456' },
+  { value: 'production_manager', label: '生产经理', username: 'manager', password: '123456' },
+  { value: 'quality_engineer', label: '质量工程师', username: 'quality', password: '123456' },
+  { value: 'repairman', label: '维修工', username: 'repair', password: '123456' },
+  { value: 'admin', label: '管理员', username: 'admin', password: '123456' },
 ]
 
 export const PERMISSION_CODES = {
@@ -105,6 +105,7 @@ export function firstAccessiblePathByPermissions(permissionCodes = []) {
 export function isRtmRole(role) {
   return ROLES.some((item) => item.value === role)
 }
+
 export const ROLE_PERMISSIONS = {
   process_engineer: [
     PERMISSION_CODES.DASHBOARD,
@@ -162,7 +163,7 @@ export const ROLE_HOME_PATH = {
   production_manager: '/production/work-order',
   team_leader: '/execution/loading',
   operator: '/execution/loading',
-  quality_engineer: '/execution/repair',
+  quality_engineer: '/execution/check-out',
   repairman: '/execution/repair',
   admin: '/dashboard',
 }
@@ -177,77 +178,78 @@ export function firstAccessiblePath(role) {
 }
 
 export const WORK_ORDER_STATUS = {
-  1: { label: '鑽夌', type: 'info', color: '#909399' },
-  2: { label: '宸查噴鏀?, type: 'warning', color: '#d97706' },
-  3: { label: '鐢熶骇涓?, type: 'primary', color: '#2563eb' },
-  4: { label: '宸叉殏鍋?, type: 'warning', color: '#d97706' },
-  5: { label: '宸插畬鎴?, type: 'success', color: '#16a34a' },
-  6: { label: '宸插叧闂?, type: 'info', color: '#6b7280' },
-  draft: { label: '寰呭垱寤?, type: 'info', color: '#909399' },
-  pending: { label: '寰呴噴鏀?, type: 'warning', color: '#d97706' },
-  running: { label: '鐢熶骇涓?, type: 'primary', color: '#2563eb' },
-  paused: { label: '鏆傚仠', type: 'warning', color: '#d97706' },
-  completed: { label: '宸插畬鎴?, type: 'success', color: '#16a34a' },
-  closed: { label: '宸插叧闂?, type: 'info', color: '#6b7280' },
+  1: { label: '草稿', type: 'info', color: '#909399' },
+  2: { label: '已发布', type: 'warning', color: '#d97706' },
+  3: { label: '生产中', type: 'primary', color: '#2563eb' },
+  4: { label: '已暂停', type: 'warning', color: '#d97706' },
+  5: { label: '已完成', type: 'success', color: '#16a34a' },
+  6: { label: '已关闭', type: 'info', color: '#6b7280' },
+  draft: { label: '草稿', type: 'info', color: '#909399' },
+  pending: { label: '待发布', type: 'warning', color: '#d97706' },
+  running: { label: '生产中', type: 'primary', color: '#2563eb' },
+  paused: { label: '已暂停', type: 'warning', color: '#d97706' },
+  completed: { label: '已完成', type: 'success', color: '#16a34a' },
+  closed: { label: '已关闭', type: 'info', color: '#6b7280' },
 }
 
 export const BATCH_STATUS = {
-  1: { label: '寰呯敓浜?, type: 'warning', color: '#b7791f' },
-  2: { label: '鐢熶骇涓?, type: 'primary', color: '#2563eb' },
-  3: { label: '鏆傚仠', type: 'warning', color: '#d97706' },
-  4: { label: '缁翠慨涓?, type: 'danger', color: '#dc2626' },
-  5: { label: '宸查攣瀹?, type: 'danger', color: '#dc2626' },
-  6: { label: '宸插畬鎴?, type: 'success', color: '#16a34a' },
-  pending: { label: '寰呯敓浜?, type: 'warning', color: '#b7791f' },
-  running: { label: '鐢熶骇涓?, type: 'primary', color: '#2563eb' },
-  paused: { label: '鏆傚仠', type: 'warning', color: '#d97706' },
-  repair: { label: '缁翠慨涓?, type: 'danger', color: '#dc2626' },
-  locked: { label: '宸查攣瀹?, type: 'danger', color: '#dc2626' },
-  completed: { label: '宸插畬鎴?, type: 'success', color: '#16a34a' },
+  1: { label: '待生产', type: 'warning', color: '#b7791f' },
+  2: { label: '生产中', type: 'primary', color: '#2563eb' },
+  3: { label: '已暂停', type: 'warning', color: '#d97706' },
+  4: { label: '维修中', type: 'danger', color: '#dc2626' },
+  5: { label: '已锁定', type: 'danger', color: '#dc2626' },
+  6: { label: '已完成', type: 'success', color: '#16a34a' },
+  pending: { label: '待生产', type: 'warning', color: '#b7791f' },
+  running: { label: '生产中', type: 'primary', color: '#2563eb' },
+  paused: { label: '已暂停', type: 'warning', color: '#d97706' },
+  repair: { label: '维修中', type: 'danger', color: '#dc2626' },
+  locked: { label: '已锁定', type: 'danger', color: '#dc2626' },
+  completed: { label: '已完成', type: 'success', color: '#16a34a' },
 }
 
 export const PROCESS_STATUS = {
-  1: { label: '寰呰繘绔?, type: 'info', color: '#64748b' },
-  2: { label: '宸茶繘绔?, type: 'primary', color: '#2563eb' },
-  3: { label: '宸插嚭绔?, type: 'success', color: '#16a34a' },
-  4: { label: '鏆傚仠', type: 'warning', color: '#d97706' },
-  5: { label: '閿佸畾', type: 'danger', color: '#dc2626' },
-  6: { label: '璺宠繃', type: 'info', color: '#6b7280' },
-  wait_in: { label: '寰呰繘绔?, type: 'info', color: '#64748b' },
-  checked_in: { label: '宸茶繘绔?, type: 'primary', color: '#2563eb' },
-  checked_out: { label: '宸插嚭绔?, type: 'success', color: '#16a34a' },
-  paused: { label: '鏆傚仠', type: 'warning', color: '#d97706' },
-  locked: { label: '閿佸畾', type: 'danger', color: '#dc2626' },
-  skipped: { label: '璺宠繃', type: 'info', color: '#6b7280' },
+  1: { label: '待进站', type: 'info', color: '#64748b' },
+  2: { label: '已进站', type: 'primary', color: '#2563eb' },
+  3: { label: '已出站', type: 'success', color: '#16a34a' },
+  4: { label: '已暂停', type: 'warning', color: '#d97706' },
+  5: { label: '已锁定', type: 'danger', color: '#dc2626' },
+  6: { label: '已跳过', type: 'info', color: '#6b7280' },
+  wait_in: { label: '待进站', type: 'info', color: '#64748b' },
+  checked_in: { label: '已进站', type: 'primary', color: '#2563eb' },
+  checked_out: { label: '已出站', type: 'success', color: '#16a34a' },
+  paused: { label: '已暂停', type: 'warning', color: '#d97706' },
+  locked: { label: '已锁定', type: 'danger', color: '#dc2626' },
+  skipped: { label: '已跳过', type: 'info', color: '#6b7280' },
 }
 
 export const DEVICE_STATUS = {
-  1: { label: '杩愯', type: 'success', color: '#16a34a' },
-  2: { label: '寰呮満', type: 'warning', color: '#d97706' },
-  3: { label: '鏁呴殰', type: 'danger', color: '#dc2626' },
-  4: { label: '淇濆吇', type: 'warning', color: '#d97706' },
-  5: { label: '绂荤嚎', type: 'info', color: '#6b7280' },
-  6: { label: '鎶ュ簾', type: 'danger', color: '#dc2626' },
-  running: { label: '杩愯', type: 'success', color: '#16a34a' },
-  standby: { label: '寰呮満', type: 'warning', color: '#d97706' },
-  fault: { label: '鏁呴殰', type: 'danger', color: '#dc2626' },
-  offline: { label: '绂荤嚎', type: 'info', color: '#6b7280' },
+  1: { label: '运行中', type: 'success', color: '#16a34a' },
+  2: { label: '待机', type: 'warning', color: '#d97706' },
+  3: { label: '故障', type: 'danger', color: '#dc2626' },
+  4: { label: '维护中', type: 'warning', color: '#d97706' },
+  5: { label: '离线', type: 'info', color: '#6b7280' },
+  6: { label: '报废', type: 'danger', color: '#dc2626' },
+  running: { label: '运行中', type: 'success', color: '#16a34a' },
+  standby: { label: '待机', type: 'warning', color: '#d97706' },
+  fault: { label: '故障', type: 'danger', color: '#dc2626' },
+  maintenance: { label: '维护中', type: 'warning', color: '#d97706' },
+  offline: { label: '离线', type: 'info', color: '#6b7280' },
+  scrapped: { label: '报废', type: 'danger', color: '#dc2626' },
 }
 
 export const DEVICE_TYPES = [
-  '鍗板埛鏈?,
-  'SPI 妫€娴嬩华',
-  '楂橀€熻创鐗囨満',
-  '閫氱敤璐寸墖鏈?,
-  '鍥炴祦鐐?,
-  'AOI 妫€娴嬩华',
+  '印刷机',
+  'SPI检测仪',
+  '贴片机',
+  '回流焊',
+  'AOI检测仪',
 ]
 
 export function statusMeta(map, value) {
-  return map[value] || { label: value || '鏈煡', type: 'info', color: '#909399' }
+  return map[value] || { label: value || '未知', type: 'info', color: '#909399' }
 }
 
-// 鎵规鐘舵€佹暟瀛楃紪鐮侊紙鐢ㄤ簬鍚庣杩斿洖鐨?lotStatus 瀛楁姣斿锛?export const BATCH_STATUS_CODE = {
+export const BATCH_STATUS_CODE = {
   pending: 1,
   running: 2,
   paused: 3,
@@ -256,7 +258,7 @@ export function statusMeta(map, value) {
   completed: 6,
 }
 
-// 宸ュ簭鐘舵€佹暟瀛楃紪鐮侊紙鐢ㄤ簬鍚庣杩斿洖鐨?operationStatus 瀛楁姣斿锛?export const PROCESS_STATUS_CODE = {
+export const PROCESS_STATUS_CODE = {
   wait_in: 1,
   checked_in: 2,
   checked_out: 3,
