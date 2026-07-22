@@ -148,13 +148,19 @@ router.beforeEach(async (to) => {
   try {
     const userStore = useUserStore()
     const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}')
-    const role = userInfo.role || 'rtm_admin'
+    const role = userInfo.role || 'RTM_ADMIN'
     if (!isRtmRole(role)) {
       localStorage.removeItem('token')
       localStorage.removeItem('userInfo')
       return { path: '/login', query: { redirect: to.fullPath } }
     }
-    await userStore.ensurePermissionsLoaded()
+    // 权限接口失败时不要踢回登录页，否则会掩盖后端真实错误
+    // 而是让用户进入页面（可能侧边栏不全），并在控制台暴露错误便于联调
+    try {
+      await userStore.ensurePermissionsLoaded()
+    } catch (permErr) {
+      console.error('[router] 加载用户功能权限失败，先放行进入页面：', permErr)
+    }
     const permission = to.meta.permission
     if (permission && !userStore.hasPermission(permission)) {
       return { path: userStore.firstAccessiblePath() }
